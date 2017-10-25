@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notifier</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400" rel="stylesheet">
+  <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <style>
+  body{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 200;
+    color: white;
+    background: -o-linear-gradient(right, #2193b0, #6dd5ed  ); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #2193b0, #6dd5ed  ); /* For Firefox 3.6 to 15 */
+    background: -webkit-linear-gradient(top left, #2193b0, #6dd5ed);
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+    height: 100vh;
+  }
+
+  .container{
+    margin-top: 20vh;
+  }
+
+
+.no-border{
+  border-top:0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom-width: 1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: none;
+  background-color: transparent;
+  transition: all 700ms ease;
+  color: #ffffff;
+}
+.no-border:focus{
+  border-top:0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom-width: 2px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: none;
+  color:#ffffff;
+  transition: all 700ms ease;
+}
+.button {
+  margin: 1vh;
+  padding:0.9vh 2.5vh;
+  clear: none;
+  border: 1px solid white;
+  border-radius: 1px;
+  background-color: transparent;
+  opacity: 1;
+  transition: all 700ms ease;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.button:hover {
+  background-color: white;
+  -webkit-transition: all 700ms ease;
+  -o-transition: all 700ms ease;
+  transition: all 700ms ease;
+  color: #0675ac;
+  box-shadow: none;
+}
+
+
+  </style>
+
+</head>
+<body>
+  <div class="container">
+    <center>
+    <div>
+      <h2>Hi. Just press Go to send the notification</h2>
+      <form method="POST" action="/notification">
+        <input type="text" name="message" class="create-notification no-border" placeholder="Send a notification :)"></input>
+        <button type="submit" class="submit-notification button">Go!</button>
+      </form>
+    </div>
+    <center>
+  </div>
+
+    <script>
+
+      var pusher = new Pusher('bfb09ca7ed97d908bdac', {
+        cluster: 'ap2',
+        encrypted: true
+      });
+
+        var notificationsChannel = pusher.subscribe('notifications');
+
+        notificationsChannel.bind('new_notification', function(notification){
+            var message = notification.message;
+            alert(message);
+        });
+
+    </script>
+
+</body>
+</html>
